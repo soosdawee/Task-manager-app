@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,6 +43,18 @@ public class PersonService {
             return repo.save(currentPerson.get());
         }
         return null;
+    }
+
+    public void deletePerson(Long id) {
+        repo.deleteById(id);
+    }
+
+    public List<Person> getPeople() {
+        return repo.findAll();
+    }
+
+    public Person getPerson(Long id) {
+        return repo.findById(id).get();
     }
 
 }

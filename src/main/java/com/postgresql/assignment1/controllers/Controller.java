@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -31,18 +32,48 @@ public class Controller {
         taskService.saveTask(task);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updatePerson/{id}")
     public Person updatePerson(@PathVariable Long id, @RequestBody Person person) {
         return personService.updatePerson(id, person);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/updatePerson/{id}")
     public Person updatePersonBetter(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         return personService.updatePersonBetter(id, fields);
     }
 
-    @PatchMapping("/task/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-        return taskService.updateTask(id, fields);
+    @PatchMapping("/updateTask/{id}")
+    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+        return taskService.updateTask(id, task);
+    }
+
+    @DeleteMapping("/deletePerson/{id}")
+    public void deletePerson(@PathVariable Long id) {
+        personService.deletePerson(id);
+    }
+
+    @DeleteMapping("/deleteTask/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+    }
+
+    @GetMapping("/people")
+    public List<Person> viewPeople() {
+        return personService.getPeople();
+    }
+
+    @GetMapping("/tasks")
+    public List<Task> viewTasks() {
+        return taskService.getTasks();
+    }
+
+    @GetMapping("/person/{id}")
+    public Person getPerson(@PathVariable Long id) {
+        return personService.getPerson(id);
+    }
+
+    @GetMapping("/task/{id}")
+    public Task getTask(@PathVariable Long id) {
+        return taskService.getTask(id);
     }
 }
