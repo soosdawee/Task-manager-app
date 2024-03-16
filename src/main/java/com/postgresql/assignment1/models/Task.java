@@ -13,13 +13,9 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @ManyToOne(fetch =  FetchType.LAZY)
-    @JoinColumn(name = "person.id")
-    private Person person;
     private String description;
 
-    public Task(Person person, String description) {
-        this.person = person;
+    public Task(String description) {
         this.description = description;
     }
 
@@ -35,13 +31,6 @@ public class Task {
         this.id = id;
     }
 
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 
     public String getDescription() {
         return description;

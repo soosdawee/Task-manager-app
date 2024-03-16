@@ -13,8 +13,8 @@ import java.util.UUID;
 @Table(name = "person")
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(unique = true)
     private String name;
@@ -24,8 +24,9 @@ public class Person {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, orphanRemoval = false)
-    private List<Task> listAuthorities = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_person_id", referencedColumnName = "id")
+    private List<Task> tasks = new ArrayList<>();
 
     public Person(String name, String password, String email) {
         this.name = name;
@@ -37,11 +38,11 @@ public class Person {
 
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
