@@ -5,6 +5,7 @@ import com.postgresql.assignment1.models.Task;
 import com.postgresql.assignment1.repos.PersonRepo;
 import com.postgresql.assignment1.repos.TaskRepo;
 import com.postgresql.assignment1.services.PersonService;
+import com.postgresql.assignment1.services.TaskService;
 import jakarta.persistence.PersistenceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class Controller {
     @Autowired
     PersonService personService;
     @Autowired
-    TaskRepo taskRepo;
+    TaskService taskService;
 
     @PostMapping("/addPerson")
     public void addPerson(@RequestBody Person person) {
@@ -27,7 +28,7 @@ public class Controller {
 
     @PostMapping("/addTask")
     public void addTask(@RequestBody Task task) {
-        taskRepo.save(task);
+        taskService.saveTask(task);
     }
 
     @PutMapping("/{id}")
@@ -36,7 +37,12 @@ public class Controller {
     }
 
     @PatchMapping("/{id}")
-    public  Person updatePersonBetter(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+    public Person updatePersonBetter(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         return personService.updatePersonBetter(id, fields);
+    }
+
+    @PatchMapping("/task/{id}")
+    public Task updateTask(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+        return taskService.updateTask(id, fields);
     }
 }
